@@ -14,8 +14,7 @@ import time
 import string
 from asgiref.sync import sync_to_async
 
-# async_function = sync_to_async(ScraperBot, thread_sensitive=False)
-# async_function = sync_to_async(sensitive_sync_function, thread_sensitive=True)
+
 
 @sync_to_async
 def ScraperBot(requests):
@@ -25,15 +24,12 @@ def ScraperBot(requests):
         browser =  p.chromium.launch()
         page = browser.new_page()
         page.goto("https://webscraper.io/test-sites/e-commerce/allinone/computers/laptops")
-        # print(page.title())
-
-        # html = page.inner_html('.col-md-9')
-        # print(html)
+        
         notebooks = page.query_selector_all(".thumbnail")
         cont = 0
         for note in notebooks:
             cont+=1
-            # note = note.query_selector('.text')
+        
             
             price =  note.query_selector('.price')
             price =  price.inner_text()
@@ -45,11 +41,7 @@ def ScraperBot(requests):
 
             if search("Lenovo", name) and search("Lenovo", descript):
                 print(name + price)
-                # new_notebook =  NoteLenovo()
-                # new_notebook.id = cont
-                # new_notebook.name =  name
-                # new_notebook.description = descript
-                # new_notebook.price =  price
+                
                 name = name.translate(str.maketrans('', '', string.punctuation))
                 price = price.translate(str.maketrans('', '', "$"))
                 price = float(price)
@@ -60,7 +52,7 @@ def ScraperBot(requests):
             else:
                 continue
             
-        # print(notebooks)
+        
         print()
         time.sleep(5)
         browser.close()
@@ -71,8 +63,7 @@ def ScraperBot(requests):
             requests,
             "index.html",
         )
-    # asyncio.run(ScraperBot())
-# def validate_geeks_mail(name, price):
+    
         
             
 class NoteLenovoViewSet(viewsets.ModelViewSet):
